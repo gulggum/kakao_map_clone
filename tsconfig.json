@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    // JavaScript 모듈 옵션
+    "target": "ES6", // ES6 이상 문법
+    "module": "ESNext", // Webpack과 호환되는 ES 모듈
+    "moduleResolution": "Node", // Node.js 방식 모듈 해석
+    "esModuleInterop": true, // CommonJS 모듈 import 호환
+    "allowSyntheticDefaultImports": true, // default import 허용
+    "forceConsistentCasingInFileNames": true,
+
+    // 타입 검사
+    "strict": true, // 엄격한 타입 체크
+    "skipLibCheck": true, // 라이브러리 타입 검사 생략
+    "isolatedModules": true, // 각 파일을 독립 모듈로 처리
+
+    // JSX 설정
+    "jsx": "react-jsx",
+
+    // 출력 관련
+    "sourceMap": true, // 디버깅용 소스맵
+    "declaration": false // 타입 선언 파일 생성 여부 (false로 안정)
+  },
+  "include": ["src"], // TypeScript가 컴파일할 파일 경로
+  "exclude": ["node_modules", "build"] // 제외 경로
+}
