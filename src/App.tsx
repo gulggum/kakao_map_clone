@@ -2,7 +2,7 @@ import KakaoMapScriptLoader from "./map/KakaoMapScriptLoader";
 import KakaoMap from "./map/KakaoMap";
 
 const App = () => {
-  const KAKAO_KEY = "9395f26be11238c426e867717eae2494";
+  const KAKAO_KEY = process.env.KAKAO_MAP_KEY || "";
 
   return (
     <div className="react">

@@ -4,6 +4,10 @@ const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const dotenv = require("dotenv");
+const webpack = require("webpack");
+
+dotenv.config(); //process.env.KAKAO_KEY로 접근가능하게 됌!
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -67,5 +71,8 @@ module.exports = {
           filename: "[name].[contenthash:8].css",
         })
       : undefined,
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(process.env),
+    }),
   ].filter(Boolean),
 };
