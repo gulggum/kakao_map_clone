@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import styled from "styled-components";
 
 const KakaoMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -14,7 +15,11 @@ const KakaoMap = () => {
       new window.kakao.maps.Map(mapRef.current, option);
     });
   }, []);
-  return <div ref={mapRef} style={{ width: "500px", height: "400px" }}></div>;
+  return <MapBox ref={mapRef}></MapBox>;
 };
 
+const MapBox = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 export default KakaoMap;

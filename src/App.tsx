@@ -1,17 +1,34 @@
 import KakaoMapScriptLoader from "./map/KakaoMapScriptLoader";
 import KakaoMap from "./map/KakaoMap";
+import SearchLocation from "./map/SearchLocation";
+import { createGlobalStyle } from "styled-components";
+import MapProvider from "./context/mapProvider";
 
 const App = () => {
   const KAKAO_KEY = process.env.KAKAO_MAP_KEY || "";
 
   return (
-    <div className="react">
-      <h2>카카오맵 개발시작</h2>
+    <>
+      <GlobalStyle />
       <KakaoMapScriptLoader apiKey={KAKAO_KEY}>
-        <KakaoMap />
+        <MapProvider>
+          <SearchLocation />
+          <KakaoMap />
+        </MapProvider>
       </KakaoMapScriptLoader>
-    </div>
+    </>
   );
 };
+
+const GlobalStyle = createGlobalStyle`
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  *{ list-style: none;}
+
+  a{text-decoration:none}
+   `;
 
 export default App;

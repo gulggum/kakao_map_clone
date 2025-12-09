@@ -12,6 +12,7 @@
     "strict": true, // 엄격한 타입 체크
     "skipLibCheck": true, // 라이브러리 타입 검사 생략
     "isolatedModules": true, // 각 파일을 독립 모듈로 처리
+    "types": ["kakao.maps.d.ts"], //참고함 : https://github.com/JaeSeoKim/kakao.maps.d.ts
 
     // JSX 설정
     "jsx": "react-jsx",
