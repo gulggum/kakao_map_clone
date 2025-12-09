@@ -1,8 +1,17 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
+interface PlaceInfType {
+  id: string;
+  position: kakao.maps.LatLng;
+  title: string;
+  address: string;
+}
+
 const SearchLocation = () => {
   const [keyword, setKeyword] = useState("");
+  const [searchList, setSearchList] = useState<PlaceInfType[]>([]);
+
   const placeService = useRef<kakao.maps.services.Places | null>(null);
   useEffect(() => {
     //이미 있다면 다시 만들지 않음
@@ -22,7 +31,16 @@ const SearchLocation = () => {
     }
     placeService.current?.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        console.log("검색결과:", data);
+        const placeInfo = data.map((place) => {
+          const { address_name: address, id, place_name: title, x, y } = place;
+          return {
+            address,
+            id,
+            title,
+            position: new kakao.maps.LatLng(parseFloat(y), parseFloat(x)),
+          };
+        });
+        setSearchList(placeInfo);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 존재하지 않습니다.");
         return;
@@ -38,10 +56,9 @@ const SearchLocation = () => {
     searchPlaces(keyword);
   };
   const onSearch = (text: any) => {
-    console.log(keyword);
     setKeyword(text);
   };
-  console.log("✔️✔️", keyword);
+  console.log("✔️✔️", searchList);
 
   // const filteredList = () => {
   //   fakeData.filter((item) =>
@@ -58,12 +75,12 @@ const SearchLocation = () => {
           onChange={(e) => onSearch(e.target.value)}
         />
       </Form>
-      {Array.from({ length: 15 }).map((item, index) => {
+      {searchList.map((place: PlaceInfType) => {
         return (
-          <UlEl key={index}>
+          <UlEl key={place.id}>
             <List>
-              <Label htmlFor="">지역</Label>
-              <span>인천 연수구 송도동 컨벤시아대로 274번길 35</span>
+              <Label htmlFor="">{place.title}</Label>
+              <span>{place.address}</span>
             </List>
           </UlEl>
         );
