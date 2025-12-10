@@ -26,6 +26,16 @@ const MapMarker = ({ places }: MapMrakupProps) => {
       });
       marker.setMap(map);
 
+      //infoWinodw(텍스트라벨)
+      const infoWindow = new kakao.maps.InfoWindow({
+        map: map,
+        position: place.position,
+        content: `<div style="width:150px; text-align: center;
+  border-radius: 10px;"><div>${place.title}</div><div style="font-size: 12px;margin-bottom:5px;">${place.address}</div></div>`,
+        removable: true,
+      });
+      infoWindow.open(map, marker);
+
       bounds.extend(position);
       return marker;
     });
