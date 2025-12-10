@@ -1,8 +1,10 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useMap } from "../context/mapContext";
+import SearchList from "./searchList";
+import MapMarker from "./MapMarker";
 
-interface PlaceInfType {
+export interface PlaceInfType {
   id: string;
   position: kakao.maps.LatLng;
   title: string;
@@ -79,6 +81,7 @@ const SearchLocation = () => {
     //지도이동
     const moveLatLng = new window.kakao.maps.LatLng(lat, lng);
     map.setCenter(moveLatLng);
+    map.setLevel(3);
     //마커표시
     const marker = new window.kakao.maps.Marker({ position: moveLatLng });
     marker.setMap(map);
@@ -93,20 +96,9 @@ const SearchLocation = () => {
           onChange={(e) => onSearch(e.target.value)}
         />
       </Form>
-      {searchList.map((place: PlaceInfType) => {
-        return (
-          <UlEl key={place.id}>
-            <List
-              onClick={() =>
-                onhandleClick(place.position.getLat(), place.position.getLng())
-              }
-            >
-              <span>{place.title}</span>
-              <span>{place.address}</span>
-            </List>
-          </UlEl>
-        );
-      })}
+      <SearchList places={searchList} onSelect={onhandleClick} />
+      {/*카머 생성/제거 담당*/}
+      <MapMarker places={searchList} />
     </Container>
   );
 };
@@ -124,26 +116,6 @@ const Form = styled.form``;
 const Input = styled.input`
   width: 100%;
   height: 40px;
-`;
-
-const UlEl = styled.ul`
-  margin: 0;
-  padding: 0;
-`;
-const List = styled.li`
-  width: 100%;
-  border-bottom: 1px solid gray;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  &:hover {
-    background-color: black;
-    color: white;
-    cursor: pointer;
-  }
-  span:first-child {
-    font-weight: 600;
-  }
 `;
 
 export default SearchLocation;
