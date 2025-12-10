@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { useMap } from "../context/mapContext";
 
 interface PlaceInfType {
   id: string;
@@ -9,8 +10,16 @@ interface PlaceInfType {
 }
 
 const SearchLocation = () => {
+  const { map } = useMap(); //context에서 가져온 맵 객체
   const [keyword, setKeyword] = useState("");
-  const [searchList, setSearchList] = useState<PlaceInfType[]>([]);
+  const [searchList, setSearchList] = useState<PlaceInfType[]>([
+    {
+      id: "1",
+      position: new window.kakao.maps.LatLng(37.5665, 126.978), // 예: 서울 좌표
+      title: "기본 장소",
+      address: "서울시",
+    },
+  ]);
 
   const placeService = useRef<kakao.maps.services.Places | null>(null);
   useEffect(() => {
@@ -51,20 +60,29 @@ const SearchLocation = () => {
     });
   };
 
+  //키워드 입력해 제출시 searchPlaces에 보내기
   const onHandleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     searchPlaces(keyword);
   };
+
+  //키워드값 keyword상태값에 보내기
   const onSearch = (text: any) => {
     setKeyword(text);
   };
-  console.log("✔️✔️", searchList);
 
-  // const filteredList = () => {
-  //   fakeData.filter((item) =>
-  //     item.label.toLowerCase().includes(keyword.toLowerCase())
-  //   );
-  // };
+  const onhandleClick = (lat: number, lng: number) => {
+    if (!map) {
+      ("map 객체가 아직없습니다");
+      return;
+    }
+    //지도이동
+    const moveLatLng = new window.kakao.maps.LatLng(lat, lng);
+    map.setCenter(moveLatLng);
+    //마커표시
+    const marker = new window.kakao.maps.Marker({ position: moveLatLng });
+    marker.setMap(map);
+  };
 
   return (
     <Container>
@@ -78,8 +96,12 @@ const SearchLocation = () => {
       {searchList.map((place: PlaceInfType) => {
         return (
           <UlEl key={place.id}>
-            <List>
-              <Label htmlFor="">{place.title}</Label>
+            <List
+              onClick={() =>
+                onhandleClick(place.position.getLat(), place.position.getLng())
+              }
+            >
+              <span>{place.title}</span>
               <span>{place.address}</span>
             </List>
           </UlEl>
@@ -109,13 +131,19 @@ const UlEl = styled.ul`
   padding: 0;
 `;
 const List = styled.li`
+  width: 100%;
   border-bottom: 1px solid gray;
   padding: 8px;
   display: flex;
   flex-direction: column;
-`;
-const Label = styled.label`
-  font-weight: 600;
+  &:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  span:first-child {
+    font-weight: 600;
+  }
 `;
 
 export default SearchLocation;

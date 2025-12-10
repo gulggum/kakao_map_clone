@@ -1,8 +1,15 @@
 import { useContext, createContext } from "react";
 
-export const KakaoMapContext = createContext(null);
+//map객체를 담기위한 context
 
-export const useMap = () => {
+export interface KakaoMapContextType {
+  map: kakao.maps.Map | null;
+  setMap: React.Dispatch<React.SetStateAction<kakao.maps.Map | null>>;
+}
+
+export const KakaoMapContext = createContext<KakaoMapContextType | null>(null);
+
+export const useMap = (): KakaoMapContextType => {
   const kakaoMap = useContext(KakaoMapContext);
 
   if (!kakaoMap) {

@@ -1,20 +1,22 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useMap } from "../context/mapContext";
 
 const KakaoMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const { map, setMap } = useMap();
 
   useEffect(() => {
-    //window.kakao가 없는경우 ->아직 script가 로드되지 않으면 실행x
-    if (!window.kakao || !window.kakao) return;
+    if (!window.kakao || map) return;
     window.kakao.maps.load(() => {
-      const option = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3, // 지도의 확대 레벨
+      const options = {
+        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3,
       };
-      new window.kakao.maps.Map(mapRef.current, option);
+      const kakaoMap = new window.kakao.maps.Map(mapRef.current, options);
+      setMap(kakaoMap);
     });
-  }, []);
+  }, [map]);
   return <MapBox ref={mapRef}></MapBox>;
 };
 
