@@ -6,7 +6,7 @@ interface SearchListProps {
   onSelect: (lat: number, lng: number) => void;
 }
 const SearchList = ({ places, onSelect }: SearchListProps) => {
-  return places.map((place: PlaceInfType) => {
+  return places.map((place: PlaceInfType, index) => {
     return (
       <UlEl key={place.id}>
         <List
@@ -14,7 +14,9 @@ const SearchList = ({ places, onSelect }: SearchListProps) => {
             onSelect(place.position.getLat(), place.position.getLng())
           }
         >
-          <span>{place.title}</span>
+          <span>
+            {index + 1}. {place.title}
+          </span>
           <span>{place.address}</span>
         </List>
       </UlEl>
@@ -28,17 +30,21 @@ const UlEl = styled.ul`
 `;
 const List = styled.li`
   width: 100%;
-  border-bottom: 1px solid gray;
-  padding: 8px;
+  min-height: 80px;
+  border-bottom: 1px solid gainsboro;
+  padding: 8px 15px;
   display: flex;
   flex-direction: column;
   &:hover {
-    background-color: black;
-    color: white;
+    background-color: #eff7ff;
+
     cursor: pointer;
   }
   span:first-child {
-    font-weight: 600;
+    font-weight: 400;
+  }
+  span:last-child {
+    font-size: 12px;
   }
 `;
 

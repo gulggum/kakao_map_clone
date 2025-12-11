@@ -34,7 +34,7 @@ const MapMarker = ({ places }: MapMrakupProps) => {
       root.render(
         <OverLayBox>
           <CloseBtn onClick={closeOverlay}>x</CloseBtn>
-          <div style={{ fontWeight: "600" }}>{place.title}</div>
+          <div style={{ fontWeight: "500" }}>{place.title}</div>
           <div style={{ fontSize: "12px", color: "#444" }}>{place.address}</div>
         </OverLayBox>
       );
@@ -88,7 +88,7 @@ export const CloseBtn = styled.button`
   top: 0;
   border: none;
   cursor: pointer;
-  background-color: white;
+  background-color: #ffce8a;
   border-radius: 4px;
 `;
 export default MapMarker;

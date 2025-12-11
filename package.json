@@ -26,6 +26,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "babel-loader": "^10.0.0",
+    "babel-plugin-styled-components": "^2.1.4",
     "cross-env": "^10.1.0",
     "css-extract-plugin": "^0.0.1",
     "css-loader": "^7.1.2",

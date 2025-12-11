@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useMap } from "../context/mapContext";
-import SearchList from "./searchList";
+import SearchList from "./SearchList";
 import MapMarker from "./MapMarker";
 
 export interface PlaceInfType {
@@ -86,6 +86,7 @@ const SearchLocation = () => {
 
   return (
     <Container>
+      <Logo>Kakao Map</Logo>
       <Form onSubmit={onHandleSubmit}>
         <Input
           placeholder="Search..."
@@ -102,14 +103,26 @@ const SearchLocation = () => {
 
 const Container = styled.div`
   position: absolute;
-  width: 250px;
+  width: 300px;
   z-index: 222;
   height: 100%;
   overflow-y: auto;
-  background-color: gainsboro;
-  opacity: 0.7;
+  background-color: #fff;
+  opacity: 0.9;
 `;
-const Form = styled.form``;
+const Logo = styled.span`
+  display: block;
+  font-size: 23px;
+  font-weight: 700;
+  background-color: #258fff;
+  color: #fff;
+  padding-left: 20px;
+  padding-top: 8px;
+`;
+const Form = styled.form`
+  padding: 10px 20px 20px 20px;
+  background-color: #258fff;
+`;
 const Input = styled.input`
   width: 100%;
   height: 40px;
