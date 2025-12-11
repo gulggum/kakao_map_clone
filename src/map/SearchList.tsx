@@ -6,18 +6,23 @@ interface SearchListProps {
   onSelect: (lat: number, lng: number) => void;
 }
 const SearchList = ({ places, onSelect }: SearchListProps) => {
+  console.log(places);
   return places.map((place: PlaceInfType, index) => {
     return (
       <UlEl key={place.id}>
-        <List
-          onClick={() =>
-            onSelect(place.position.getLat(), place.position.getLng())
-          }
-        >
-          <span>
+        <List>
+          <Title
+            onClick={() =>
+              onSelect(place.position.getLat(), place.position.getLng())
+            }
+          >
             {index + 1}. {place.title}
-          </span>
-          <span>{place.address}</span>
+          </Title>
+          <Address>{place.address}</Address>
+          <WrapBox>
+            <Phone>{place.phone}</Phone>
+            <UrlLink href={place.detailUrl}>상세보기</UrlLink>
+          </WrapBox>
         </List>
       </UlEl>
     );
@@ -37,14 +42,40 @@ const List = styled.li`
   flex-direction: column;
   &:hover {
     background-color: #eff7ff;
-
     cursor: pointer;
   }
   span:first-child {
     font-weight: 400;
   }
-  span:last-child {
-    font-size: 12px;
+`;
+const Title = styled.span`
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+const Address = styled.span`
+  font-size: 13px;
+  margin-bottom: 2px;
+`;
+
+const WrapBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const Phone = styled.span`
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: #288756;
+`;
+
+const UrlLink = styled.a`
+  text-align: right;
+  display: inline-block;
+  font-size: 12px;
+  color: #258fff;
+  z-index: 100000;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 

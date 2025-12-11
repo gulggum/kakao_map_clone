@@ -25,7 +25,6 @@ const KakaoMapScriptLoader = ({
         setLoaded(true);
       });
     };
-
     document.head.appendChild(script); //script라서 head영역에 넣기
   }, [apiKey]);
 

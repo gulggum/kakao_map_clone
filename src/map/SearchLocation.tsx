@@ -9,6 +9,8 @@ export interface PlaceInfType {
   position: kakao.maps.LatLng;
   title: string;
   address: string;
+  phone: string;
+  detailUrl: string;
 }
 
 const SearchLocation = () => {
@@ -18,8 +20,10 @@ const SearchLocation = () => {
     {
       id: "1",
       position: new window.kakao.maps.LatLng(37.5665, 126.978), // 예: 서울 좌표
-      title: "기본 장소",
-      address: "서울시",
+      title: "서울특별시청",
+      address: "서울특별시 중구 세종대로 110",
+      phone: "02-120",
+      detailUrl: "https://www.seoul.go.kr/main/index.jsp",
     },
   ]);
 
@@ -43,12 +47,22 @@ const SearchLocation = () => {
     placeService.current?.keywordSearch(keyword, (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
         const placeInfo = data.map((place) => {
-          const { address_name: address, id, place_name: title, x, y } = place;
+          const {
+            address_name: address,
+            id,
+            place_name: title,
+            x,
+            y,
+            phone,
+            place_url: detailUrl,
+          } = place;
           return {
             address,
             id,
             title,
             position: new kakao.maps.LatLng(parseFloat(y), parseFloat(x)),
+            phone,
+            detailUrl,
           };
         });
         setSearchList(placeInfo);
@@ -126,6 +140,9 @@ const Form = styled.form`
 const Input = styled.input`
   width: 100%;
   height: 40px;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
 `;
 
 export default SearchLocation;
