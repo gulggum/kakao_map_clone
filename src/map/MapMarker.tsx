@@ -3,6 +3,7 @@ import { useMap } from "../context/mapContext";
 import { PlaceInfType } from "./SearchLocation";
 import styled from "styled-components";
 import { createRoot } from "react-dom/client";
+import { device } from "../deviceStyles/styles";
 
 interface MapMrakupProps {
   places: PlaceInfType[];
@@ -34,8 +35,8 @@ const MapMarker = ({ places }: MapMrakupProps) => {
       root.render(
         <OverLayBox>
           <CloseBtn onClick={closeOverlay}>x</CloseBtn>
-          <div style={{ fontWeight: "500" }}>{place.title}</div>
-          <div style={{ fontSize: "12px", color: "#444" }}>{place.address}</div>
+          <Title>{place.title}</Title>
+          <Address>{place.address}</Address>
         </OverLayBox>
       );
 
@@ -78,9 +79,22 @@ export const OverLayBox = styled.div`
   align-items: center;
   background: #f9e1bf;
   border-radius: 6px;
-  font-size: 14px;
   gap: 4px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
+`;
+const Title = styled.span`
+  font-weight: 500;
+  font-size: 14px;
+  @media ${device.mobile} {
+    font-size: 12px;
+  }
+`;
+const Address = styled.span`
+  font-size: 12px;
+  color: #444;
+  @media ${device.mobile} {
+    font-size: 10px;
+  }
 `;
 export const CloseBtn = styled.button`
   position: absolute;

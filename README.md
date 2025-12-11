@@ -17,7 +17,7 @@ CRA 없이 **React + TypeScript** 환경에서 카카오 지도를 구현한 프
 
 2. **검색 기능 및 리스트 표시**
 
-   - 입력창에서 장소 검색
+   - 입력창에서 키워드 검색
    - 검색 결과 리스트를 화면에 표시
 
 3. **마커 표시**
@@ -42,6 +42,14 @@ CRA 없이 **React + TypeScript** 환경에서 카카오 지도를 구현한 프
 
 - CRA 없이 직접 React + TypeScript 환경 구성
 - Context를 활용해 map/marker 객체를 전역에서 관리
-- 검색 결과 리스트와 지도 마커 동기화
+- 키워드기반 검색 결과 리스트와 지도 마커 동기화
+- PC/모바일 반응형 지원
 
-## 실행 방법
+## 배포 링크 [Vercel로 간편하게 배포]
+
+[프로젝트 URL](https://kakao-map-clone.vercel.app/)
+
+## 화면 예시
+
+![지도 화면](./screenshots/map.png)
+![검색 및 리스트](./screenshots/search-list.png)

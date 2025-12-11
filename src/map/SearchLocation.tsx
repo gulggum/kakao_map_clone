@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useMap } from "../context/mapContext";
 import SearchList from "./SearchList";
 import MapMarker from "./MapMarker";
+import { device } from "../deviceStyles/styles";
 
 export interface PlaceInfType {
   id: string;
@@ -26,6 +27,7 @@ const SearchLocation = () => {
       detailUrl: "https://www.seoul.go.kr/main/index.jsp",
     },
   ]);
+  const [open, setOpen] = useState(false);
 
   const placeService = useRef<kakao.maps.services.Places | null>(null);
   useEffect(() => {
@@ -100,49 +102,100 @@ const SearchLocation = () => {
 
   return (
     <Container>
-      <Logo>Kakao Map</Logo>
-      <Form onSubmit={onHandleSubmit}>
-        <Input
-          placeholder="Search..."
-          value={keyword}
-          onChange={(e) => onSearch(e.target.value)}
-        />
-      </Form>
-      <SearchList places={searchList} onSelect={onhandleClick} />
-      {/*카머 생성/제거 담당*/}
-      <MapMarker places={searchList} />
+      <Header>
+        {" "}
+        <Logo>Kakao Map</Logo>
+        <Form onSubmit={onHandleSubmit}>
+          <Input
+            placeholder="지역 키워드로 검색해주세요. ex) 강남"
+            value={keyword}
+            onChange={(e) => onSearch(e.target.value)}
+          />
+        </Form>
+      </Header>
+      <Sidebar open={open}>
+        {" "}
+        <HandleBar onClick={() => setOpen(!open)} />
+        <SearchList places={searchList} onSelect={onhandleClick} />
+      </Sidebar>
+
+      <MapWrapper>
+        {/*마커 생성/제거 담당*/}
+        <MapMarker places={searchList} />
+      </MapWrapper>
     </Container>
   );
 };
 
 const Container = styled.div`
   position: absolute;
-  width: 300px;
+  width: 390px;
   z-index: 222;
   height: 100%;
   overflow-y: auto;
   background-color: #fff;
   opacity: 0.9;
+  @media ${device.mobile} {
+    position: static;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    background-color: transparent;
+    opacity: 1;
+  }
+`;
+const Header = styled.div`
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  background-color: #258fff;
+  padding: 10px;
+  @media ${device.mobile} {
+    position: fixed;
+    top: 0;
+    z-index: 22222;
+    width: 100%;
+  }
+`;
+
+const MapWrapper = styled.div``;
+const Sidebar = styled.div<{ open: boolean }>`
+  @media ${device.mobile} {
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    z-index: 222;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: #fff;
+    opacity: 0.9;
+    transition: transform 0.3s ease;
+    transform: ${({ open }) => (open ? "translateY(0)" : "translateY(260px)")};
+  }
 `;
 const Logo = styled.span`
   display: block;
   font-size: 23px;
   font-weight: 700;
-  background-color: #258fff;
   color: #fff;
-  padding-left: 20px;
-  padding-top: 8px;
+  margin-left: 20px;
 `;
 const Form = styled.form`
-  padding: 10px 20px 20px 20px;
-  background-color: #258fff;
+  padding: 10px;
 `;
 const Input = styled.input`
   width: 100%;
   height: 40px;
-  padding: 5px;
+  padding: 10px;
   border: none;
   border-radius: 10px;
+`;
+const HandleBar = styled.div`
+  width: 40px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 10px;
+  margin: 10px auto;
+  cursor: pointer;
 `;
 
 export default SearchLocation;

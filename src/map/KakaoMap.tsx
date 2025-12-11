@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useMap } from "../context/mapContext";
+import { device } from "../deviceStyles/styles";
 
 const KakaoMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
