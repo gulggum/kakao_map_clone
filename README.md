@@ -51,5 +51,5 @@ CRA 없이 **React + TypeScript** 환경에서 카카오 지도를 구현한 프
 
 ## 화면 예시
 
-![지도 화면](./screenshots/map.png)
-![검색 및 리스트](./screenshots/search-list.png)
+![PC 버전](./src/images/PCver.png)
+![Mobile 버전](./src/images/Mobilver.jpg)

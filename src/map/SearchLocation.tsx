@@ -99,6 +99,7 @@ const SearchLocation = () => {
     map.setCenter(moveLatLng);
     map.setLevel(3);
   };
+  console.log(open);
 
   return (
     <Container>
