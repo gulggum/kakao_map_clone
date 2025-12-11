@@ -82,9 +82,6 @@ const SearchLocation = () => {
     const moveLatLng = new window.kakao.maps.LatLng(lat, lng);
     map.setCenter(moveLatLng);
     map.setLevel(3);
-    //마커표시
-    const marker = new window.kakao.maps.Marker({ position: moveLatLng });
-    marker.setMap(map);
   };
 
   return (
